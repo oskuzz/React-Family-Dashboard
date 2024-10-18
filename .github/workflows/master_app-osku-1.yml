@@ -10,6 +10,12 @@ on:
   workflow_dispatch:
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: .NET 8 release bug fix
+        run: mkdir -p ~/.aspnet/https
   build:
     runs-on: ubuntu-latest
 

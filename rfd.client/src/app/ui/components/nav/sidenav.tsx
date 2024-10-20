@@ -2,17 +2,16 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { 
-    Card, 
-    Container,
-    InputGroup,
-    Button 
+import {
+    Card,
+    Container
 } from 'react-bootstrap';
+import NavLink from './navlink';
 import Logo from '@/app/ui/assets/images/rfd-logo.svg';
 
 export default function SideNavigation() {
     return (
-        <Container style={{ width: '250px'}}>
+        <Container style={{ width: '250px' }}>
             <div className="text-center mt-3">
                 <Card>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -30,10 +29,9 @@ export default function SideNavigation() {
                     </Card.Body>
                 </Card>
             </div>
-            <InputGroup>
-                <InputGroup.Text><i className="fa-solid fa-staff-snake"></i></InputGroup.Text>
-                <Link className="" href="/reptiles">Reptilet</Link>
-            </InputGroup>
+            <NavLink href="/reptiles" name="Reptilet" icon="fa-solid fa-staff-snake" active/>
+            <NavLink href="/Pets" name="Lemmikit" icon="fa-solid fa-dog" />
+            <NavLink href="/House" name="Talo" icon="fa-solid fa-house" />
         </Container>
     );
 }

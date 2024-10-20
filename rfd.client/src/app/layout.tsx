@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "@/app/ui/assets/globals.css";
+import Script from 'next/script';
+import "@/app/ui/assets/css/globals.css";
+import SideNav from '@/app/ui/components/nav/sidenav';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const geistSans = localFont({
@@ -26,10 +28,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <head>
+      <Script src="https://kit.fontawesome.com/f7039a0123.js"/>
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
+        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+          <div className="w-full flex-none md:w-64">
+            < SideNav />
+          </div>
+          <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+        </div>
       </body>
     </html>
   );

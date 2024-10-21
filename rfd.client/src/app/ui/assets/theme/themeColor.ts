@@ -131,3 +131,12 @@ export const navLinksTheme = {
         active: getColor("white")
     }
 }
+
+export const sideNavTheme = {
+    background: {
+        default: getColor("gray")
+    },
+    color:{
+        default: getColor("black")
+    }
+}

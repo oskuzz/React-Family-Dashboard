@@ -5,6 +5,21 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --theme-color-c1: #224F26;
+  --theme-color-c2: #256D1B;
+  --theme-color-c3: #9FD356;
+  --theme-color-c4: #255E21;
+  --theme-color-c5: #44872A;
+  --theme-color-c6: #25661E;
+  --theme-color-c7: #62A039;
+  --theme-color-info: #2D7DD2;
+  --theme-color-warning: #F4C95D;
+  --theme-color-danger: #AD343E;
+  --theme-color-black: #000;
+  --theme-color-darkgray: #c3c3c3;
+  --theme-color-gray: #dcdcdc;
+  --theme-color-lightgray: #F4F4F4;
+  --theme-color-white: #FFF;
 }
 
 @media (prefers-color-scheme: dark) {

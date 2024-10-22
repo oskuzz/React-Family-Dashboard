@@ -124,11 +124,11 @@ function getColor(color: string, opacityKey = 100) {
 export const navLinksTheme = {
     background: {
         default: getColor("white"),
-        active: getColor("c2")
+        active: getColor("c2", 40)
     },
     color:{
         default: getColor("black"),
-        active: getColor("white")
+        active: getColor("c1")
     }
 }
 

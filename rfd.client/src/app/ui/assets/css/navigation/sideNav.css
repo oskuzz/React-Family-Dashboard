@@ -1,0 +1,49 @@
+.sideNav {
+    background-color: var(--theme-color-gray);
+    width: 250px;
+    height: 100%;
+    padding-right: 15px;
+}
+
+.sideNav>* {
+    >.logo-container {
+        width: 100%;
+        background-color: var(--theme-color-white);
+        border-radius: 0.375rem;
+    }
+
+    >.navLink {
+        width: 100%;
+        background-color: var(--theme-color-white);
+        color: var(--theme-color-black);
+        text-decoration: none;
+        padding: 10px;
+        border-radius: 0.375rem;
+        transition: 0.2s;
+
+        >label {
+            cursor: pointer;
+        }
+
+        >.icon {
+            width: 35px;
+        }
+    }
+
+    >.navLink:hover {
+        background-color: rgb(from var(--theme-color-c1) r g b / 20%);
+    }
+
+    >.navLink.filler:hover {
+        background-color: var(--theme-color-white);
+    }
+
+    >.navLink.active {
+        color: var(--theme-color-white);
+        background-color: var(--theme-color-c1);
+    }
+
+    >.navLink.active:hover {
+        background-color: rgb(from var(--theme-color-c1) r g b / 80%);
+    }
+}

@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import '@/app/ui/assets/css/navigation/sideNav.css'
 import {
-    Card,
     Stack,
     Container
 } from 'react-bootstrap';
@@ -32,11 +31,9 @@ export default function SideNavigation() {
                     <h4 className="d-flex justify-content-center">Family Dashboard</h4>
                 </div>
                 {
-                    links.map((link) => {
-                        return (
-                            <NavLink href={link.href} name={link.name} icon={link.icon} />
-                        )
-                    })
+                    links.map(link => (
+                            <NavLink key={link.href} href={link.href} name={link.name} icon={link.icon} />
+                        ))
                 }
                 <NavLinkFiller />
             </Stack>

@@ -1,13 +1,11 @@
 import Link from 'next/link';
-import { InputGroup, Card } from 'react-bootstrap';
-import { navLinksTheme as theme } from '@/app/ui/assets/theme/themeColor';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
 export function NavLink({
     href, name, icon
 }: {
-    href: string, name: string, icon: string, active?: boolean
+    href: string, name: string, icon: string
 }) {
     const pathname = usePathname();
     return (

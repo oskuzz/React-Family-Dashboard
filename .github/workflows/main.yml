@@ -46,13 +46,13 @@ jobs:
         shell: pwsh
         run: |
             cd rfd.client
-            $ZIP_FILE_NAME = "./rfd_nextjs_build.zip"
+            $ZIP_FILE_NAME = "./rfdbuild.zip"
             zip $ZIP_FILE_NAME ./* .next -qr
 
             az webapp deploy `
                 --resource-group "rg-osku" `
                 --name "app-osku-2" `
-                --src-path "rfd_nextjs_build" `
+                --src-path "rfdbuild" `
                 --slot staging `
                 --type zip `
                 --clean true 

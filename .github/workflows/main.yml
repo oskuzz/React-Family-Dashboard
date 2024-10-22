@@ -25,6 +25,7 @@ jobs:
 
       - name: Install dependencies # Installs your app dependencies
         run: |
+          cd .\rfd.client\
           npm install
 
       - name: 'Login to Azure Subscription' # This is required for OIDC authentication to Azure
@@ -36,6 +37,7 @@ jobs:
             
       - name: Build Next.js app
         run: |
+          cd .\rfd.client\
           npm run build
           mv .next/static .next/standalone/.next/static
           # mv public .next/standalone/public
@@ -43,6 +45,7 @@ jobs:
       - name: Deploy
         shell: pwsh
         run: |
+            cd .\rfd.client\
             $ZIP_FILE_NAME = "./${FILE_NAME}.zip"
             zip $ZIP_FILE_NAME ./* .next -qr
 

@@ -53,6 +53,5 @@ jobs:
                 --resource-group "rg-osku" `
                 --name "app-osku-2" `
                 --src-path "./rfdbuild.zip" `
-                --slot staging `
                 --type zip `
                 --clean true 

@@ -11,13 +11,13 @@ export default function SideNavigationLink({
     const styles: { [key: string]: object } = {
         link: {
             width: "150px",
-            "text-decoration": "none",
-            "font-size": "large",
+            textDecoration: "none",
+            fontSize: "large",
             color: (active ? theme.color.active : theme.color.default)
         },
         card: {
             background: (active ? theme.background.active : theme.background.default),
-            "border-radius": "0.375rem"
+            borderRadius: "0.375rem"
         },
         icon: {
             width: "40px",

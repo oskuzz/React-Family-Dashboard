@@ -1,3 +1,6 @@
 <Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.1184077">
-
+  <PropertyGroup>
+    <BuildCommand>pnpm build</BuildCommand>
+    <StartupCommand>pnpm start</StartupCommand>
+  </PropertyGroup>
 </Project>

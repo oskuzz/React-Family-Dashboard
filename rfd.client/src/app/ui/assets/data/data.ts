@@ -39,6 +39,7 @@ interface ReptileSkinChange {
     date: Nullable<Date>
 }
 
+
 interface ReptileTerrarium {
     size: Nullable<string>,
     heatingElements: Nullable<Array<string>>, // For example heating mat, heatlamp...

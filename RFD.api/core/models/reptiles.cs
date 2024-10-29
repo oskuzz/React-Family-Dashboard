@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace RDF.API.Models
 {
     public class Reptile

@@ -1,0 +1,15 @@
+.information-card {
+    width: 300px;
+}
+
+.measure-table {
+    border-radius: 0.375rem;
+}
+
+.background-yellow {
+    background-color: var(--theme-color-warning) !important;
+}
+
+.background-gray {
+    background-color: var(--theme-color-darkgray) !important;
+}

@@ -12,7 +12,7 @@ import Logo from '@/app/ui/assets/images/rfd-logo.svg';
 export default function SideNavigation() {
     const links = [
         { name: "Etusivu", href: "/", icon: "fa-solid fa-house"},
-        { name: "Reptilet", href: "/Reptiles", icon: "fa-solid fa-staff-snake" },
+        { name: "Reptilet", href: "/reptiles?id=1", icon: "fa-solid fa-staff-snake" },
         { name: "Lemmikit", href: "/pets", icon: "fa-solid fa-dog" },
     ];
 

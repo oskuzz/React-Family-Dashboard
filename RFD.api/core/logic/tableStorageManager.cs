@@ -3,10 +3,11 @@ using Azure.Data.Tables;
 using Azure;
 using RFD.API.Interface.Managers;
 using RFD.API.Enums.Managers;
+using RFD.API.Managers.Tools;
 
 namespace RFD.API.Managers
 {
-    public class TableStorageManager : ITableStorageManager
+    public class TableStorageManager : ITableStorageManager, ITableStorageToolbox
     {
         private readonly IConfiguration _configuration;
         public TableStorageManager(IConfiguration configuration)
@@ -125,6 +126,28 @@ namespace RFD.API.Managers
             TableClient client = await CreateClient(args.TableName);
 
             return Execute(client, args);
+        }
+
+        public string GeneratePartitionKey(IEnumerable<string> keys)
+        {
+            string partitionKey = "";
+
+            foreach(string key in keys){
+                partitionKey += $@"{key} - ";
+            }
+
+            return partitionKey.Substring(0, partitionKey.Length - 3);
+        }
+
+        public string GenerateRowKey(IEnumerable<string> keys)
+        {
+            string partitionKey = "";
+
+            foreach(string key in keys){
+                partitionKey += $@"{key}-";
+            }
+
+            return partitionKey.Substring(0, partitionKey.Length - 1);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using Azure;
 using Azure.Data.Tables;
 using RFD.API.Interface.Entities;
+using RFD.API.Interface.Managers;
 
 namespace RFD.API.Models
 {

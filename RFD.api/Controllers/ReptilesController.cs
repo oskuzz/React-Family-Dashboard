@@ -12,16 +12,26 @@ namespace RFD.API.Controllers
     [Route("[controller]")]
     public class ReptilesController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
-        private ReptileManager _manager;
+        private IReptileManager _reptileManager;
         private ITableStorageManager _storageManager;
         private ISeedReptileData _seedReptileData;
-        public ReptilesController(IConfiguration configuration, ITableStorageManager storageManager, ISeedReptileData seedReptileData)
+        public ReptilesController(ITableStorageManager storageManager, ISeedReptileData seedReptileData, IReptileManager reptileManager)
         {
-            _configuration = configuration;
-            _storageManager = storageManager;
             _seedReptileData = seedReptileData;
-            _manager = new ReptileManager(_configuration);
+            _storageManager = storageManager;
+            _reptileManager = reptileManager;
+        }
+
+        [HttpGet("TestReptileManager")]
+        public async Task<Reptile?> GetReptile([FromBody] ReptileEntityArgs args)
+        {
+            return await _reptileManager.GetReptileEntityAsync(args);
+        }
+
+        [HttpGet("TestReptileManager2")]
+        public async Task<ReptileInfo?> GetReptileInfo([FromBody] ReptileEntityArgs args)
+        {
+            return await _reptileManager.GetReptileInfoAsync(args);
         }
 
         [HttpGet("AddTestReptile")]
@@ -70,7 +80,7 @@ namespace RFD.API.Controllers
         [HttpGet("GetSeededReptileData")]
         public async Task<Reptile?> GetSeededReptileData()
         {
-            return await _storageManager.GetValuesAsync<Reptile>( new TableStorageManagerArgs.Get()
+            return await _storageManager.GetValuesAsync<Reptile>(new TableStorageManagerArgs.Get()
             {
                 TableName = "Reptiles",
                 PartitionKey = "Reptiles - Reptile",
@@ -81,7 +91,7 @@ namespace RFD.API.Controllers
         [HttpGet("GetSeededReptileInfoData")]
         public async Task<ReptileInfo?> GetSeededReptileInfoData()
         {
-            return await _storageManager.GetValuesAsync<ReptileInfo>( new TableStorageManagerArgs.Get()
+            return await _storageManager.GetValuesAsync<ReptileInfo>(new TableStorageManagerArgs.Get()
             {
                 TableName = "Reptiles",
                 PartitionKey = "Reptiles - ReptileInformation",

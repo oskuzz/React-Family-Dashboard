@@ -1,6 +1,7 @@
 using RFD.API.Interface.Managers;
 using RFD.API.Interface.Seed;
 using RFD.API.Managers;
+using RFD.API.Managers.Tools;
 using RFD.API.Seed.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ITableStorageManager, TableStorageManager>();
+builder.Services.AddSingleton<ITableStorageToolbox, TableStorageManager>();
+builder.Services.AddSingleton<IReptileManager, ReptileManager>();
 builder.Services.AddSingleton<ISeedReptileData, SeedReptileData>();
 
 var app = builder.Build();

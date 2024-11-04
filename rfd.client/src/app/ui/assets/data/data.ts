@@ -62,7 +62,13 @@ export function getReptileData() {
         { height: null, weight: 287, date: new Date("2024-4-8") },
         { height: null, weight: 365, date: new Date("2024-9-29") }
     ];
-    const reptileTerrarium: ReptileTerrarium = { size: "90x45x45cm", heatingElements: ["Lämpölamppu"], otherAccessories: ["UV lamppu", "Vesiastia"], idealTemperature: 30 }
+    const reptileTerrarium: ReptileTerrarium = 
+        { 
+            size: "90x45x45cm", 
+            heatingElements: ["Lämpölamppu"], 
+            otherAccessories: ["UV lamppu", "Vesiastia"], 
+            idealTemperature: 30 
+        }
     const reptileSkinChange: Array<ReptileSkinChange> = [
         { date: new Date('2024-10-14'), quality: "normaali" }
     ]
@@ -85,8 +91,13 @@ export function getReptileData() {
     ]
     const reptiles: Array<Reptile> = [
         {
-            reptileId: 1, name: "Lusifer", nickname: "Lusse", birthday: new Date('2020-6-1'), reptileSpecies: "Viljakäärme",
-            description: "Lusse on meidän ensimmäinen herppi. Vilkas ja utelias tapaus.", genes: reptileGenes,
+            reptileId: 1, 
+            name: "Lusifer", 
+            nickname: "Lusse", 
+            birthday: new Date('2020-6-1'), 
+            reptileSpecies: "Viljakäärme",
+            description: "Lusse on meidän ensimmäinen herppi. Vilkas ja utelias tapaus.", 
+            genes: reptileGenes,
             terrarium: reptileTerrarium
         }
     ];

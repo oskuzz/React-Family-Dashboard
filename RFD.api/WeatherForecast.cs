@@ -1,4 +1,4 @@
-namespace RFD.api
+namespace RFD.API
 {
     public class WeatherForecast
     {

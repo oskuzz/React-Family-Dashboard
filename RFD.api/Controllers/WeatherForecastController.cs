@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace RFD.api.Controllers
+namespace RFD.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]

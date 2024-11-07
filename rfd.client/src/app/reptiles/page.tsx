@@ -1,23 +1,26 @@
-'use client'
-
-import { useSearchParams } from 'next/navigation';
-
-import { ReptileInfo } from '@/app/ui/components/reptiles/reptileInfoCard';
-import { MeasureTable } from '@/app/ui/components/reptiles/measures/measureTable';
+import ReptileInfo from '@/app/ui/components/reptiles/reptileInfoCard';
 import '@/app/ui/assets/css/reptiles/styles.css';
+import { Suspense } from 'react';
+import { getReptileData, getReptileInfoData } from '@/app/ui/assets/data/data';
 import { Details } from '../ui/components/reptiles/details';
+import ReptileInfoCardSkeleton from './loading';
 
-export default function Reptiles() {
-  const searchParams = useSearchParams()
+export default async function Reptiles() {
+  const gender = "Female", species = "Viljakäärme", name = "Lusifer";
+  const { data: reptileData } = await getReptileData(gender, species, name);
+  const { data: reptileInfoData } = await getReptileInfoData(gender, species, name);
 
-  const reptileId = parseInt(searchParams.get('id') ?? "0");
   return (
-    <div className="d-flex flex-row">
+    <div className="d-flex flex-row h-100">
       <div className="w-25">
-        <ReptileInfo id={reptileId} />
+        <Suspense fallback={<ReptileInfoCardSkeleton />}>
+          <ReptileInfo data={reptileData} />
+        </Suspense>
       </div>
       <div className="d-flex flex-column ms-3 w-75">
-        <Details id={reptileId}/>
+        <Suspense fallback={<label>Loading...</label>}>
+          <Details data={reptileInfoData} reptile={reptileData} />
+        </Suspense>
       </div>
     </div>
   );

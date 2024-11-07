@@ -1,24 +1,12 @@
+"use client"
 import { Table } from 'react-bootstrap';
-import { getReptileData } from "@/app/ui/assets/data/data";
-
-function getData(id: number) {
-    const { reptileInfo } = getReptileData();
-
-    let skin = reptileInfo?.filter((m) => m.reptileId === id)[0].skinChange;
-
-    if(!skin){
-        skin = [{date: null, quality: null}]
-    }
-
-    return skin;
-}
+import { ReptileSkinChange } from "@/app/ui/assets/data/data";
 
 export function SkinChangeTable({
-    id
+    data
 }: {
-    id: number
+    data: Array<ReptileSkinChange> | undefined
 }) {
-    const data = getData(id);
     return (
         <>
             <Table striped bordered className="measure-table">
@@ -31,8 +19,8 @@ export function SkinChangeTable({
                 <tbody>
                     {
                         data?.map(skin => (
-                            <tr key={skin.date?.toDateString() ?? ' - '}>
-                                <td>{skin.date?.toLocaleDateString('fi-FI') ?? ' - '}</td>
+                            <tr key={new Date(skin.date??"").toDateString() ?? ' - '}>
+                                <td>{new Date(skin.date??"").toLocaleDateString('fi-FI') ?? ' - '}</td>
                                 <td>{skin.quality ?? ' - '}</td>
                             </tr>
                         ))

@@ -1,4 +1,6 @@
-import { getReptileData } from "@/app/ui/assets/data/data";
+import { Reptile, ReptileMeasures } from "@/app/ui/assets/data/data";
+import 'chartjs-adapter-moment';
+import moment from "moment";
 
 import {
     Chart as ChartJS,
@@ -9,69 +11,79 @@ import {
     Title,
     Tooltip,
     Legend,
-  } from 'chart.js'
-  import { Line } from 'react-chartjs-2'
-  
-  ChartJS.register(
+    TimeScale,
+} from 'chart.js/auto'
+import { Line } from 'react-chartjs-2'
+
+ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
     LineElement,
     Title,
     Tooltip,
-    Legend
-  )
+    Legend,
+    TimeScale
+)
 
-function getData(id: number) {
-    const { reptileInfo } = getReptileData();
+function transformData(data: Array<ReptileMeasures> | undefined, reptile: Reptile | undefined) {
+    const bd = new Date(reptile?.birthday ?? "") ?? new Date()
 
-    const measures = reptileInfo.measures?.filter((m) => m.reptileId === id);
-
-    return measures;
-}
-
-function generateData() {
+    const calcAge = function (date: Date) {
+        return ((Math.abs(date.getTime() - bd.getTime())) / (1000 * 3600 * 24)) / 365.25;
+    }
+    const labels = data?.map(l => [moment(l.date).format("DD.MM.YYYY"), `(${calcAge(new Date(l.date ?? "")).toFixed(1)} vuotias)`]);
+    
     return {
-        labels: ["1", "2", "3", "4", "5"],
+        labels: labels,
         datasets: [
             {
-                label: 'Paino',
-                data: [1,2,3,4,5],
+                label: 'Paino kehitys',
+                data: data?.map(d => d.weight ?? undefined),
                 borderColor: '#2D7DD2',
-                backgroundColor: '#2D7DD2'
-              },
-              {
-                label: 'Pituus',
-                data: [3,4,5,6,7],
+                backgroundColor: '#2D7DD2',
+                tension: 0.1
+            },
+            {
+                label: 'Pituus kehitys',
+                data: data?.map(d => d.height ?? undefined),
                 borderColor: '#44872A',
-                backgroundColor: '#44872A'
-              }
+                backgroundColor: '#44872A',
+                tension: 0.1
+            }
         ]
     }
 }
 
-const options ={
-    responsive: true,
-    plugins: {
-        legend: {
-            position: 'top',
-        },
-        title: {
-            display: true,
-            text: 'Chart.js Line Chart'
-        }
-    }
-}
-
 export function MeasureChart({
-    id
+    data, reptile
 }: {
-    id: number
+    data: Array<ReptileMeasures> | undefined, reptile: Reptile | undefined
 }) {
-    const data = getData(id);
+    const datasets = transformData(data, reptile);
+    //const data = getData(id);
     return (
         <>
-            <Line data={generateData()} />
+            <div className={"mb-3"} style={{ position: "relative", height: "30vh", width: "100%" }}>
+                <Line data={datasets} options={
+                    {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    source: 'data'
+                                }
+                            }
+                        }
+                    }
+                } />
+            </div>
         </>
     );
 }

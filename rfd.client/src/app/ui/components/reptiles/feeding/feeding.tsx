@@ -1,10 +1,11 @@
 import { Card } from "react-bootstrap";
 import { FeedingTable } from "./feedingTable";
+import { ReptileFeeding } from "@/app/ui/assets/data/data";
 
 export function Feeding({
-    id
+    data
 }: {
-    id:  number
+    data:  Array<ReptileFeeding> | undefined
 }){
     return (
         <>
@@ -13,7 +14,7 @@ export function Feeding({
                     <h4>Ruokinta tiedot</h4>
                 </Card.Header>
                 <Card.Body>
-                    <FeedingTable id={id} />
+                    <FeedingTable data={data} />
                 </Card.Body>
             </Card>
         </>

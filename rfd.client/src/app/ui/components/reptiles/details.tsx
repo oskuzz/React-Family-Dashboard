@@ -1,29 +1,31 @@
+"use client"
 import { Card, Tabs, Tab } from "react-bootstrap";
 import { Measures } from "./measures/measures";
 import { Feeding } from "./feeding/feeding";
 import { SkinChange } from "./skinChange/skinChange";
 import { Breeding } from "./breeding/breeding";
+import { Reptile, ReptileInfo } from "../../assets/data/data";
 
 export function Details({
-    id
+    data, reptile
 }: {
-    id: number
+    data: ReptileInfo | undefined, reptile: Reptile | undefined
 }) {
 
     return (
         <>
             <Tabs defaultActiveKey="growth" id="reptile-details" className="mb-3" fill transition={true}>
                 <Tab eventKey="growth" title="Kasvu">
-                    <Measures id={id} />
+                    <Measures data={data?.measures} reptile={reptile} />
                 </Tab>
                 <Tab eventKey="feeding" title="Ruokinta">
-                    <Feeding id={id} />
+                    <Feeding data={data?.feeding} />
                 </Tab>
                 <Tab eventKey="skinChange" title="Nahanvaihto">
-                    <SkinChange id={id} />
+                    <SkinChange data={data?.skinChange} />
                 </Tab>
                 <Tab eventKey="breeding" title="Parittelu">
-                    <Breeding id={id} />
+                    <Breeding data={data?.breeding} />
                 </Tab>
             </Tabs>
         </>

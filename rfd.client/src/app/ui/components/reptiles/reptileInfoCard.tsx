@@ -1,47 +1,39 @@
-import { Badge, Card, CardBody, ListGroup } from "react-bootstrap";
-
-import { getReptileData } from "@/app/ui/assets/data/data";
+"use client"
+import { Reptile } from "@/app/ui/assets/data/data";
+import Badge from "react-bootstrap/Badge";
+import Card from "react-bootstrap/Card";
+import CardBody from "react-bootstrap/CardBody";
 import Lusifer from '@/app/ui/assets/images/Lusse_The_Sanke.jpeg';
-import clsx from "clsx";
+import moment from "moment";
 
-function getData(id: number) {
-    const { reptiles } = getReptileData();
+export default function ReptileInfo({data}: {data: Reptile | undefined}) {
 
-    const reptile = reptiles.filter((r) => r.reptileId === id)[0];
-
-    return reptile;
-}
-
-export function ReptileInfo({
-    id
-}: {
-    id: number
-}) {
-    const reptile = getData(id);
-    const bd = reptile.birthday ?? new Date()
-    const age: number | null = reptile.birthday !== null ? ((Math.abs(Date.now() - bd.getTime())) / (1000 * 3600 * 24)) / 365.25 : null;
+    const bd = new Date(data?.birthday ?? "") ?? new Date()
+    const age: number | null = data?.birthday !== null ? ((Math.abs(Date.now() - bd.getTime())) / (1000 * 3600 * 24)) / 365.25 : null;
+    const birth: string = moment(data?.birthday).format("DD.MM.YYYY");
     return (
         <>
             <Card className="information-card">
                 <Card.Img variant="top" src={Lusifer.src}></Card.Img>
                 <Card.Body>
-                    <Card.Title>{reptile.name} {reptile.nickname !== null ? `(${reptile.nickname})` : ""}</Card.Title>
+                    <Card.Title>{data?.name} {data?.nickname !== null ? `(${data?.nickname})` : ""} {data?.gender === "Female" ? <i aria-hidden className="fa-solid fa-venus" style={{ color: "#fa47aa" }}></i> : <i aria-hidden className="fa-solid fa-mars" style={{ color: "#1E90FF" }}></i>}</Card.Title>
                     <hr />
-                    <Card.Text className="text-muted">{reptile.reptileSpecies}</Card.Text>
+                    <Card.Text className="text-muted">{data?.reptileSpecies}</Card.Text>
 
                     <Card.Text>
                         <strong>Ikä</strong>: {age?.toFixed(1)} vuotta<br />
-                        {reptile.description}
+                        <strong>Syntynyt</strong>: {birth}<br />
+                        {data?.description}
                     </Card.Text>
                 </Card.Body>
                 <CardBody>
                     <Card.Text><strong>Terraario</strong></Card.Text>
                     <hr />
                     <Card.Text>
-                        <strong>Koko</strong>: {reptile.terrarium?.size}<br />
-                        <strong>Ihanne lämpötila</strong>: {reptile.terrarium?.idealTemperature} &deg;C<br />
-                        <strong>Lämmitys</strong>: {reptile.terrarium?.heatingElements?.join(', ')}<br />
-                        <strong>Muut</strong>: {reptile.terrarium?.otherAccessories?.join(', ')}
+                        <strong>Koko</strong>: {data?.terrarium?.size}<br />
+                        <strong>Ihanne lämpötila</strong>: {data?.terrarium?.idealTemperature} &deg;C<br />
+                        <strong>Lämmitys</strong>: {data?.terrarium?.heatingElements?.join(', ')}<br />
+                        <strong>Muut</strong>: {data?.terrarium?.otherAccessories?.join(', ')}
                     </Card.Text>
                 </CardBody>
                 <Card.Body>
@@ -49,8 +41,8 @@ export function ReptileInfo({
                     <hr />
                     <Card.Text>
                         {
-                            reptile.genes?.map(gene => (
-                                <Badge key={gene.gene} className={`${gene.color ? `background-${gene.color}` : ''} me-1`}>{gene.gene}</Badge>
+                            data?.genes?.map(gene => (
+                                <Badge key={gene.gene} className={`${gene.color ? `background-${gene.color.toLowerCase()}` : ''} me-1`}>{gene.gene}</Badge>
                             ))
                         }
                     </Card.Text>

@@ -1,10 +1,11 @@
 import { Card } from "react-bootstrap";
 import { BreedingTable } from "./breedingTable";
+import { ReptileBreeding } from "@/app/ui/assets/data/data";
 
 export function Breeding({
-    id
+    data
 }: {
-    id:  number
+    data:  Array<ReptileBreeding>  | undefined
 }){
     return (
         <>
@@ -13,7 +14,7 @@ export function Breeding({
                     <h4>Parittelu tiedot</h4>
                 </Card.Header>
                 <Card.Body>
-                    <BreedingTable id={id}/>
+                    <BreedingTable data={data}/>
                 </Card.Body>
             </Card>
         </>

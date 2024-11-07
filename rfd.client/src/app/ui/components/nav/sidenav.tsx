@@ -26,6 +26,7 @@ export default function SideNavigation() {
                             src={Logo}
                             width="150"
                             height="150"
+                            priority
                         />
                     </div>
                     <h4 className="d-flex justify-content-center">Family Dashboard</h4>

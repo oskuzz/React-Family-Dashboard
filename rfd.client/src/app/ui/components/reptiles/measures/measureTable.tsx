@@ -1,24 +1,12 @@
+"use client"
 import { Table } from 'react-bootstrap';
-import { getReptileData } from "@/app/ui/assets/data/data";
-
-function getData(id: number) {
-    const { reptileInfo } = getReptileData();
-
-    let measures = reptileInfo?.filter((m) => m.reptileId === id)[0].measures;
-
-    if (!measures) {
-        measures = [{ date: null, height: null, weight: null }]
-    }
-
-    return measures;
-}
+import { ReptileMeasures } from "@/app/ui/assets/data/data";
 
 export function MeasureTable({
-    id
+    data
 }: {
-    id: number
+    data: Array<ReptileMeasures> | undefined
 }) {
-    const data = getData(id);
     return (
         <>
             <Table striped bordered className="measure-table">
@@ -33,7 +21,7 @@ export function MeasureTable({
                     {
                         data?.map(measure => (
                             <tr key={measure.weight}>
-                                <td>{measure.date?.toLocaleDateString('fi-FI') ?? ' - '}</td>
+                                <td>{new Date(measure.date ?? "")?.toLocaleDateString('fi-FI') ?? ' - '}</td>
                                 <td>{measure.height ?? ' - '} {measure.height !== null ? ' cm' : ''}</td>
                                 <td>{measure.weight ?? ' - '} {measure.weight !== null ? ' g' : ''}</td>
                             </tr>

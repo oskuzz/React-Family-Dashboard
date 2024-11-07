@@ -1,79 +1,80 @@
-type Nullable<T> = T | null | undefined;
+"use server"
 
-interface Reptile {
-    reptileId: Nullable<number>,
-    name?: Nullable<string>,
-    nickname?: Nullable<string>,
-    birthday?: Nullable<Date>,
-    img?: Nullable<string>,
-    reptileSpecies?: Nullable<string>,
-    description?: Nullable<string>,
-    genes?: Nullable<Array<ReptileGeneMap>>,
-    terrarium?: Nullable<ReptileTerrarium>
+export interface Reptile {
+    reptileId?: number,
+    name?: string,
+    nickname?: string,
+    gender?: string,
+    birthday?: string,
+    img?: string,
+    reptileSpecies?: string,
+    description?: string,
+    genes?: Array<ReptileGeneMap>,
+    terrarium?: ReptileTerrarium
 }
 
-interface ReptileGeneMap {
-    gene: Nullable<string>,
-    color?: Nullable<string>
+export interface ReptileGeneMap {
+    gene?: string,
+    color?: string
 }
 
-interface ReptileMeasures {
-    height: Nullable<number>, // cm
-    weight: Nullable<number>, // g
-    date: Nullable<Date>,
+export interface ReptileMeasures {
+    height?: number, // cm
+    weight?: number, // g
+    date?: string,
 }
 
-interface ReptileFeeding {
-    type: Nullable<string>, // Mouse, Rat...
-    size: Nullable<number>, // g
-    date: Nullable<Date>, // feeding date
+export interface ReptileFeeding {
+    type?: string, // Mouse, Rat...
+    size?: number, // g
+    date?: string, // feeding date
 }
 
-interface ReptileBreeding {
-    partnerId: Nullable<number>,
-    date: Nullable<Date>
+export interface ReptileBreeding {
+    partnerId?: number,
+    date?: string
 }
 
-interface ReptileSkinChange {
-    quality: Nullable<string>, // Skin quality. For example 'normal' or 'torned'
-    date: Nullable<Date>
+export interface ReptileSkinChange {
+    quality?: string, // Skin quality. For example 'normal' or 'torned'
+    date?: string
 }
 
 
-interface ReptileTerrarium {
-    size: Nullable<string>,
-    heatingElements: Nullable<Array<string>>, // For example heating mat, heatlamp...
-    otherAccessories: Nullable<Array<string>>, // For example UV light
-    idealTemperature: Nullable<number>, // celsius
+export interface ReptileTerrarium {
+    size?: string,
+    heatingElements?: Array<string>, // For example heating mat, heatlamp...
+    otherAccessories?: Array<string>, // For example UV light
+    idealTemperature?: number, // celsius
 }
 
-interface ReptileInfo {
-    reptileId: Nullable<number>,
-    measures: Nullable<Array<ReptileMeasures>>,
-    feeding: Nullable<Array<ReptileFeeding>>,
-    skinChange: Nullable<Array<ReptileSkinChange>>,
-    breeding: Nullable<Array<ReptileBreeding>>
+export interface ReptileInfo {
+    reptileId?: number,
+    measures?: Array<ReptileMeasures>,
+    feeding?: Array<ReptileFeeding>,
+    skinChange?: Array<ReptileSkinChange>,
+    breeding?: Array<ReptileBreeding>
 }
 
-export function getReptileData() {
+export async function getReptileTestData() {
     const measureData: Array<ReptileMeasures> = [
-        { height: null, weight: 218, date: new Date("2023-12-3") },
-        { height: null, weight: 280, date: new Date("2024-2-22") },
-        { height: null, weight: 287, date: new Date("2024-4-8") },
-        { height: null, weight: 365, date: new Date("2024-9-29") }
+        { height: undefined, weight: 218, date: "2023-12-3" },
+        { height: undefined, weight: 280, date: "2024-2-22" },
+        { height: undefined, weight: 287, date: "2024-4-8" },
+        { height: undefined, weight: 365, date: "2024-9-29" }
     ];
-    const reptileTerrarium: ReptileTerrarium = 
-        { 
-            size: "90x45x45cm", 
-            heatingElements: ["Lämpölamppu"], 
-            otherAccessories: ["UV lamppu", "Vesiastia"], 
-            idealTemperature: 30 
-        }
+    const reptileTerrarium: ReptileTerrarium =
+    {
+        size: "90x45x45cm",
+        heatingElements: ["Lämpölamppu"],
+        otherAccessories: ["UV lamppu", "Vesiastia"],
+        idealTemperature: 30
+    }
     const reptileSkinChange: Array<ReptileSkinChange> = [
-        { date: new Date('2024-10-14'), quality: "normaali" }
+        { date: '2024-10-14', quality: "normaali" }
     ]
     const reptileFeeding: Array<ReptileFeeding> = [
-        { date: new Date('2024-10-20'), type: "Hiiri", size: 35 }
+        { date: '2024-10-20', type: "Hiiri", size: 35 }
     ]
 
     const reptileInfo: Array<ReptileInfo> = [
@@ -82,7 +83,7 @@ export function getReptileData() {
             measures: measureData,
             feeding: reptileFeeding,
             skinChange: reptileSkinChange,
-            breeding: null
+            breeding: undefined
         }
     ];
 
@@ -91,12 +92,12 @@ export function getReptileData() {
     ]
     const reptiles: Array<Reptile> = [
         {
-            reptileId: 1, 
-            name: "Lusifer", 
-            nickname: "Lusse", 
-            birthday: new Date('2020-6-1'), 
+            reptileId: 1,
+            name: "Lusifer",
+            nickname: "Lusse",
+            birthday: '2020-6-1',
             reptileSpecies: "Viljakäärme",
-            description: "Lusse on meidän ensimmäinen herppi. Vilkas ja utelias tapaus.", 
+            description: "Lusse on meidän ensimmäinen herppi. Vilkas ja utelias tapaus.",
             genes: reptileGenes,
             terrarium: reptileTerrarium
         }
@@ -104,3 +105,55 @@ export function getReptileData() {
 
     return { reptiles, reptileInfo };
 }
+
+const delay = 0;
+
+export const getReptileData = async (gender: string, species: string, name: string) => {
+    let data: Reptile | undefined = undefined;
+    let isError = false;
+    let error = "";
+    try {
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        const res = await fetch('http://localhost:8081/Reptiles/GetReptile/', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            },
+            body: JSON.stringify({ "Gender": gender, "Species": species, "Name": name })
+        });
+        data = await res.json();
+    } catch (e) {
+        isError = true;
+        if (typeof e === "string") error = e;
+        else if (e instanceof Error) error = e.message;
+        else error = "Error";
+    }
+
+    return { data, isError, error };
+};
+
+export const getReptileInfoData = async (gender: string, species: string, name: string) => {
+    let data: ReptileInfo | undefined = undefined;
+    let isError = false;
+    let error = "";
+    try {
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        const res = await fetch('http://localhost:8081/Reptiles/GetReptileInfo/', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            },
+            body: JSON.stringify({ "Gender": gender, "Species": species, "Name": name })
+        });
+        data = await res.json();
+    } catch (e) {
+        isError = true;
+        if (typeof e === "string") error = e;
+        else if (e instanceof Error) error = e.message;
+        else error = "Error";
+    }
+
+    return { data, isError, error };
+};

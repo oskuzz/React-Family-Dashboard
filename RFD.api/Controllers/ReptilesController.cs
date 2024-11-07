@@ -18,13 +18,14 @@ namespace RFD.API.Controllers
             _reptileManager = reptileManager;
         }
 
-        [HttpGet("GetReptile")]
+        [HttpPost("GetReptile")]
         public async Task<Reptile?> GetReptile([FromBody] ReptileEntityArgs args)
         {
+            Console.WriteLine($@"{args.Gender} - {args.Species} - {args.Name}");
             return await _reptileManager.GetReptileEntityAsync(args);
         }
 
-        [HttpGet("GetReptileInfo")]
+        [HttpPost("GetReptileInfo")]
         public async Task<ReptileInfo?> GetReptileInfo([FromBody] ReptileEntityArgs args)
         {
             return await _reptileManager.GetReptileInfoAsync(args);

@@ -1,10 +1,11 @@
 import { Card } from "react-bootstrap";
 import { SkinChangeTable } from "./skinChangeTable";
+import { ReptileSkinChange } from "@/app/ui/assets/data/data";
 
 export function SkinChange({
-    id
+    data
 }: {
-    id: number
+    data: Array<ReptileSkinChange> | undefined
 }) {
     return (
         <>
@@ -13,7 +14,7 @@ export function SkinChange({
                     <h4>Nahanvaihto tiedot</h4>
                 </Card.Header>
                 <Card.Body>
-                    <SkinChangeTable id={id} />
+                    <SkinChangeTable data={data} />
                 </Card.Body>
             </Card>
         </>

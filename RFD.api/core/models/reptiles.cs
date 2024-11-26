@@ -110,11 +110,14 @@ namespace RFD.API.Models
         }
     }
 
-    public class ReptileMeasures : TableBase
+    public class ReptileMeasures : TableBase, ITableEntityBase
     {
-        public required DateTime Date { get; set; }
+        public DateTime Date { get; set; }
         public int? Weight { get; set; }
         public int? Height { get; set; }
+        public bool IsValid(){
+            return Date <= new DateTime() && ((Weight >= 0 && Height >= 0) || (Weight == null && Height >= 0) || (Weight >= 0 && Height == null));
+        }
     }
 
     public class ReptileFeeding : TableBase

@@ -4,6 +4,7 @@ using Azure;
 using RFD.API.Interface.Managers;
 using RFD.API.Enums.Managers;
 using RFD.API.Managers.Tools;
+using Newtonsoft.Json;
 
 namespace RFD.API.Managers
 {
@@ -23,7 +24,7 @@ namespace RFD.API.Managers
 
             return client;
         }
-        private T? Execute<T>(TableClient client, ITableStorageManagerArgs.Get args)
+        private T Execute<T>(TableClient client, ITableStorageManagerArgs.Get args)
             where T : class, ITableEntity, new()
         {
             try
@@ -33,7 +34,7 @@ namespace RFD.API.Managers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                return null;
+                return new();
             }
         }
         private Response? Execute<T>(TableClient client, ITableStorageManagerArgs.Add<T> args)
@@ -77,7 +78,7 @@ namespace RFD.API.Managers
             }
         }
 
-        public async Task<T?> GetValuesAsync<T>(ITableStorageManagerArgs.Get args)
+        public async Task<T> GetValuesAsync<T>(ITableStorageManagerArgs.Get args)
             where T : class, ITableEntity, new()
         {
             if (!args.IsValid())

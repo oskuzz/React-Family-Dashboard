@@ -5,7 +5,7 @@ namespace RFD.API.Interface.Managers
 {
     public interface ITableStorageManager
     {
-        public Task<T?> GetValuesAsync<T>(ITableStorageManagerArgs.Get args)
+        public Task<T> GetValuesAsync<T>(ITableStorageManagerArgs.Get args)
             where T : class, ITableEntity, new();
         public Task<Response?> AddValuesAsync<T>(ITableStorageManagerArgs.Add<T> args)
             where T : class, ITableEntity, new();

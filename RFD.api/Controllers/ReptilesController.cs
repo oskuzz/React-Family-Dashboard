@@ -18,10 +18,11 @@ namespace RFD.API.Controllers
             _reptileManager = reptileManager;
         }
 
+        // GET
+
         [HttpPost("GetReptile")]
         public async Task<Reptile?> GetReptile([FromBody] ReptileEntityArgs args)
         {
-            Console.WriteLine($@"{args.Gender} - {args.Species} - {args.Name}");
             return await _reptileManager.GetReptileEntityAsync(args);
         }
 
@@ -29,6 +30,22 @@ namespace RFD.API.Controllers
         public async Task<ReptileInfo?> GetReptileInfo([FromBody] ReptileEntityArgs args)
         {
             return await _reptileManager.GetReptileInfoAsync(args);
+        }
+
+        // ADD
+        [HttpPost("AddReptile")]
+        public async Task<Response?> AddReptile([FromBody] Reptile entity)
+        {
+            return await _reptileManager.AddReptileEntity(entity);
+        }
+
+        [HttpPost("AddReptileMeasure")]
+        public async Task<Response?> AddReptileMeasure([FromBody] ReptileMeasureEntityArgs args)
+        {
+            if(!args.IsValid()){
+                throw new ArgumentException("Provided ReptileMeasureEntityArgs is Invalid");
+            }
+            return await _reptileManager.AddReptileMeasure(args.reptile, args.measure);
         }
     }
 }

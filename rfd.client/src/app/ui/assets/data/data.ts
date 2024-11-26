@@ -106,6 +106,29 @@ export async function getReptileTestData() {
     return { reptiles, reptileInfo };
 }
 
+export const addData = async (body: string, path: string) => {
+    let isError = false;
+    let error = "";
+    try {
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        const res = await fetch('http://localhost:8081/' + path, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            },
+            body: body
+        });
+    } catch (e) {
+        isError = true;
+        if (typeof e === "string") error = e;
+        else if (e instanceof Error) error = e.message;
+        else error = "Error";
+    }
+
+    return { isError, error };
+}
+
 const delay = 0;
 
 export const getReptileData = async (gender: string, species: string, name: string) => {

@@ -14,6 +14,7 @@ import {
     TimeScale,
 } from 'chart.js/auto'
 import { Line } from 'react-chartjs-2'
+import { useState } from "react";
 
 ChartJS.register(
     CategoryScale,
@@ -60,15 +61,20 @@ export function MeasureChart({
 }: {
     data: Array<ReptileMeasures> | undefined, reptile: Reptile | undefined
 }) {
+    data?.sort( (a,b) => {
+        return Date.parse(a.date??"")-Date.parse(b.date??"");
+    });
+
     const datasets = transformData(data, reptile);
     //const data = getData(id);
     return (
         <>
             <div className={"mb-3"} style={{ position: "relative", height: "30vh", width: "100%" }}>
-                <Line data={datasets} options={
+                <Line id="measureChart" data={datasets} options={
                     {
                         maintainAspectRatio: false,
                         responsive: true,
+                        spanGaps: true,
                         plugins: {
                             legend: {
                                 position: 'bottom',
@@ -79,6 +85,9 @@ export function MeasureChart({
                                 ticks: {
                                     source: 'data'
                                 }
+                            },
+                            y:{
+                                beginAtZero: true
                             }
                         }
                     }

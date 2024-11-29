@@ -106,7 +106,7 @@ export async function getReptileTestData() {
     return { reptiles, reptileInfo };
 }
 
-export const addData = async (body: string, path: string) => {
+export const POST = async (body: string, path: string) => {
     let isError = false;
     let error = "";
     try {

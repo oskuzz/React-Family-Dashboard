@@ -40,12 +40,21 @@ namespace RFD.API.Controllers
         }
 
         [HttpPost("AddReptileMeasure")]
-        public async Task<Response?> AddReptileMeasure([FromBody] ReptileMeasureEntityArgs args)
+        public async Task<Response?> AddReptileMeasure([FromBody] ReptileMeasureEntityArgs<ReptileMeasures> args)
         {
             if(!args.IsValid()){
                 throw new ArgumentException("Provided ReptileMeasureEntityArgs is Invalid");
             }
             return await _reptileManager.AddReptileMeasure(args.reptile, args.measure);
+        }
+
+        [HttpPost("UpdateReptileMeasure")]
+        public async Task<Response?> UpdateReptileMeasure([FromBody] ReptileMeasureEntityArgs<List<ReptileMeasures>> args)
+        {
+            if(!args.IsValid()){
+                throw new ArgumentException("Provided ReptileMeasureEntityArgs is Invalid");
+            }
+            return await _reptileManager.UpdateReptileMeasure(args.reptile, args.measure);
         }
     }
 }

@@ -26,10 +26,10 @@ namespace RFD.API.Interface.Managers
         //Update methods
         public Task<Response?> UpdateReptileEntity(Reptile reptile);
         public Task<Response?> UpdateReptileInfoEntity(ReptileInfo info);
-        public Task<Response?> UpdateReptileMeasure(Reptile reptile, ReptileMeasures measure);
-        public Task<Response?> UpdateReptileFeeding(Reptile reptile, ReptileFeeding feeding);
-        public Task<Response?> UpdateReptileSkinChange(Reptile reptile, ReptileSkinChange skinChange);
-        public Task<Response?> UpdateReptileBreeding(Reptile female, Reptile male, ReptileBreeding breeding);
+        public Task<Response?> UpdateReptileMeasure(Reptile reptile, List<ReptileMeasures> measures);
+        public Task<Response?> UpdateReptileFeeding(Reptile reptile, List<ReptileFeeding> feedings);
+        public Task<Response?> UpdateReptileSkinChange(Reptile reptile, List<ReptileSkinChange> skinChanges);
+        public Task<Response?> UpdateReptileBreeding(Reptile female, Reptile male, List<ReptileBreeding> breedings);
 
         //Delete methods
         public Task<Response?> RemoveReptileEntity(Reptile reptile);

@@ -2,8 +2,8 @@ import { Card, Button } from "react-bootstrap";
 
 import { MeasureTable } from "./measureTable";
 import { MeasureChart } from "./measureChart";
-import { ReptileMeasures, Reptile, addData } from "@/app/ui/assets/data/data";
-import { useState } from "react";
+import { ReptileMeasures, Reptile, POST } from "@/app/ui/assets/data/data";
+import { useEffect, useState } from "react";
 import { Chart } from "chart.js";
 
 export function Measures({
@@ -27,19 +27,17 @@ export function Measures({
         setAddRow(false);
     }
 
-    function updateData(data: ReptileMeasures, type: string = "update") {
-        setMeasure([data, ...measures as ReptileMeasures[]]);
+    function updateData(type: string = "update") {
+        let body = JSON.stringify({ reptile: reptileData, measure: data })
 
-        switch(type.toLowerCase()){
+        switch (type.toLowerCase()) {
             case "add":
-                const body = JSON.stringify({reptile: reptileData, measure: data})
-                addData(body, "Reptiles/AddReptileMeasure/");
+                POST(body, "Reptiles/AddReptileMeasure/");
                 break;
             case "update":
+                POST(body, "Reptiles/UpdateReptileMeasure/");
                 break;
         }
-
-        Chart.getChart('measureChart')?.update();
     }
 
     return (
@@ -54,7 +52,7 @@ export function Measures({
                 </Card.Header>
                 <Card.Body>
                     <MeasureChart data={measures} reptile={reptileData} />
-                    <MeasureTable data={measures} reptile={reptileData} add={addRow} settings={updateRow} updateParent={updateData} />
+                    <MeasureTable data={measures} reptile={reptileData} add={addRow} settings={updateRow} updateParentData={setMeasure} updateParent={updateData} />
                 </Card.Body>
             </Card>
         </>

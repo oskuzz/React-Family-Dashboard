@@ -21,10 +21,10 @@ namespace RFD.API.Managers
         }
     }
 
-    public class ReptileMeasureEntityArgs
+    public class ReptileMeasureEntityArgs<T>
     {
         public required Reptile reptile { get; set; }
-        public required ReptileMeasures measure { get; set; }
+        public required T measure { get; set; }
         public bool IsValid()
         {
             return reptile != null && measure != null;
@@ -220,7 +220,7 @@ namespace RFD.API.Managers
             throw new NotImplementedException();
         }
 
-        public async Task<Response?> UpdateReptileBreeding(Reptile female, Reptile male, ReptileBreeding breeding)
+        public async Task<Response?> UpdateReptileBreeding(Reptile female, Reptile male, List<ReptileBreeding> breedings)
         {
             throw new NotImplementedException();
         }
@@ -230,7 +230,7 @@ namespace RFD.API.Managers
             throw new NotImplementedException();
         }
 
-        public async Task<Response?> UpdateReptileFeeding(Reptile reptile, ReptileFeeding feeding)
+        public async Task<Response?> UpdateReptileFeeding(Reptile reptile, List<ReptileFeeding> feedings)
         {
             throw new NotImplementedException();
         }
@@ -240,12 +240,41 @@ namespace RFD.API.Managers
             throw new NotImplementedException();
         }
 
-        public async Task<Response?> UpdateReptileMeasure(Reptile reptile, ReptileMeasures measure)
+        public async Task<Response?> UpdateReptileMeasure(Reptile reptile, List<ReptileMeasures> measures)
         {
-            throw new NotImplementedException();
+            if (reptile == null || measures == null) throw new InvalidDataException("Given arguments are InValid");
+
+            try
+            {
+                
+                var _PartitionKey = _storageToolbox.GeneratePartitionKey([_TableName, "ReptileInformation"]);
+                var _RowKey = _storageToolbox.GenerateRowKey([reptile.Gender ?? "undefined", reptile.ReptileSpecies ?? "undefined", reptile.Name ?? "undefined"]);
+
+                ReptileInfo reptileInfo = await _storageManager.GetValuesAsync<ReptileInfo>(new TableStorageManagerArgs.Get()
+                {
+                    TableName = _TableName,
+                    PartitionKey = _PartitionKey,
+                    RowKey = _RowKey
+                });
+
+                reptileInfo.PartitionKey = _PartitionKey;
+                reptileInfo.RowKey = _RowKey;
+                reptileInfo.Measures = measures;
+                
+                return await _storageManager.UpdateValuesAsync(new TableStorageManagerArgs.Update<ReptileInfo>()
+                {
+                    TableName = _TableName,
+                    Entity = reptileInfo
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
         }
 
-        public async Task<Response?> UpdateReptileSkinChange(Reptile reptile, ReptileSkinChange skinChange)
+        public async Task<Response?> UpdateReptileSkinChange(Reptile reptile, List<ReptileSkinChange> skinChange)
         {
             throw new NotImplementedException();
         }

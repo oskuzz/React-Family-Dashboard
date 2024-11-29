@@ -14,7 +14,7 @@ import {
     TimeScale,
 } from 'chart.js/auto'
 import { Line } from 'react-chartjs-2'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 ChartJS.register(
     CategoryScale,
@@ -61,6 +61,10 @@ export function MeasureChart({
 }: {
     data: Array<ReptileMeasures> | undefined, reptile: Reptile | undefined
 }) {
+    useEffect(() => {
+        ChartJS.getChart('measureChart')?.update();
+    }, [data]);
+
     data?.sort( (a,b) => {
         return Date.parse(a.date??"")-Date.parse(b.date??"");
     });
